@@ -2,15 +2,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { DevKitModule, ApiService } from 'projects/dev-kit/src/public-api';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    DevKitModule.forRoot({ id: 'Cod_Opc', name: 'Nom_Opc' }),
+    HttpClientModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
