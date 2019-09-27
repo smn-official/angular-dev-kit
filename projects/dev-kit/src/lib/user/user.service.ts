@@ -1,100 +1,95 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { UiCookie } from 'ng-smn-ui';
-// import { environment } from '../../../environments/environment';
 
 let user: any = {};
-let token: string;
 let menu: any[];
-let tokenMvc: any = {};
-let parametersMvc: any;
+let token: string;
+let custom: any = {};
 
-const environment: any = {};
-const COOKIE_NAME: any = {
-    authentication: `${environment.SYSTEM_PREFIX}Authentication`,
-    keepConnect: `${environment.SYSTEM_PREFIX}KeepConnect`,
-    isLoggedIn: `${environment.SYSTEM_PREFIX}isLoggedIn`,
-};
+export class UserServiceConfig {
+  cookiePrefix: string;
+}
 
 @Injectable()
 export class UserService {
+  authorization: string;
+  keepConnect: string;
+  isLoggedIn: string;
 
-    constructor() {
+  constructor(@Optional() config: UserServiceConfig) {
+    if (!config) {
+      return;
     }
 
-    public static get() {
-        return {
-            user,
-            token
-        };
-    }
+    this.authorization =  `${config.cookiePrefix}Authorization`;
+    this.keepConnect =  `${config.cookiePrefix}KeepConnect`;
+    this.isLoggedIn =  `${config.cookiePrefix}isLoggedIn`;
+  }
 
-    public static getUser() {
-        return user;
-    }
+  get() {
+    return {
+      user,
+      token
+    };
+  }
 
-    public static setUser(newUser) {
-        user = newUser;
-    }
+  getUser() {
+    return user;
+  }
 
-    public static setMenu(newMenu) {
-        menu = newMenu;
-    }
+  setUser(newUser) {
+    user = newUser;
+  }
 
-    public static getMenu() {
-        return menu;
-    }
+  setMenu(newMenu) {
+    menu = newMenu;
+  }
 
-    public static getToken() {
-        return UiCookie.get(COOKIE_NAME.authentication);
-    }
+  getMenu() {
+    return menu;
+  }
 
-    public static setToken(newToken, keepConnect?: boolean) {
-        token = newToken;
-        this.setCookie(token, keepConnect);
-    }
+  getToken() {
+    return UiCookie.get(this.authorization);
+  }
 
-    public static hasToken() {
-        return !!UiCookie.get(COOKIE_NAME.authentication);
-    }
+  setToken(newToken, keepConnect?: boolean) {
+    token = newToken;
+    this.setCookie(token, keepConnect);
+  }
 
-    public static getTokenMvc() {
-        return tokenMvc;
-    }
+  hasToken() {
+    return !!UiCookie.get(this.authorization);
+  }
 
-    public static setTokenMvc(newToken) {
-        tokenMvc = newToken;
-    }
+  getCustom() {
+    return custom;
+  }
 
-    public static getCookie() {
-        return {
-            authentication: UiCookie.get(COOKIE_NAME.authentication),
-            keepConnect: UiCookie.get(COOKIE_NAME.keepConnect),
-            isLoggedIn: UiCookie.get(COOKIE_NAME.isLoggedIn)
-        };
-    }
+  setCustom(value) {
+    custom = value;
+  }
 
-    public static setCookie(newToken, keepConnect?) {
-        const duration = keepConnect ? 0.25 : 1;
-        UiCookie.set(COOKIE_NAME.keepConnect, keepConnect, duration, '/');
-        UiCookie.set(COOKIE_NAME.authentication, newToken, duration, '/');
-        document.cookie = `${COOKIE_NAME.isLoggedIn}=true;;path=/`;
-    }
+  getCookie() {
+    return {
+      authorization: UiCookie.get(this.authorization),
+      keepConnect: UiCookie.get(this.keepConnect),
+      isLoggedIn: UiCookie.get(this.isLoggedIn)
+    };
+  }
 
-    public static remove() {
-        user = {};
-        token = null;
-        UiCookie.delete(COOKIE_NAME.keepConnect);
-        UiCookie.delete(COOKIE_NAME.authentication);
-        UiCookie.delete(COOKIE_NAME.isLoggedIn);
-    }
+  setCookie(newToken, keepConnect?) {
+    const duration = keepConnect ? 0.25 : 1;
+    UiCookie.set(this.keepConnect, keepConnect, duration, '/');
+    UiCookie.set(this.authorization, newToken, duration, '/');
+    document.cookie = `${this.isLoggedIn}=true;;path=/`;
+  }
 
-    public static setParametersMvc(params) {
-        parametersMvc = btoa(params);
-    }
-
-    public static getParametersMvc() {
-        let p = parametersMvc;
-        parametersMvc = null;
-        return p;
-    }
+  remove() {
+    user = {};
+    token = null;
+    UiCookie.delete(this.keepConnect);
+    UiCookie.delete(this.authorization);
+    UiCookie.delete(this.isLoggedIn);
+  }
 }

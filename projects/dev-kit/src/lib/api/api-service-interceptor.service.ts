@@ -1,23 +1,29 @@
+import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest
-} from '@angular/common/http';
 
-import { ApiService } from './api.service';
 import { UserService } from '../user/user.service';
+import { ApiService } from './api.service';
+
+
+const DEFAULT_HEADERS = {
+  'Content-Type': 'application/json',
+  'Cache-Control': 'no-cache',
+  Pragma: 'no-cache',
+  Expires: 'Sat, 01 Jan 2000 00:00:00 GMT'
+};
 
 @Injectable()
 export class ApiServiceInterceptor implements HttpInterceptor {
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private user: UserService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Pegando token de autenticação.
-    const authToken = UserService.getToken();
+    const authToken = this.user.getToken();
     // Pegando a opção da tela que o usuário está
     const option = this.api.getOption();
 
-    const headers: any = {};
+    const headers: any = { ...DEFAULT_HEADERS };
 
     if (authToken) {
       headers.Authorization = authToken;
@@ -26,7 +32,6 @@ export class ApiServiceInterceptor implements HttpInterceptor {
       headers.Option = option;
     }
 
-    headers.Authorization = 'yes, he can';
     const request = req.clone({ setHeaders: headers });
 
     return next.handle(request);

@@ -8,7 +8,6 @@ import {
 import { catchError, finalize, map } from 'rxjs/internal/operators';
 import { ApiServiceRequest, ApiServiceRequestOptions } from './api-request';
 import { ApiResponse } from './api-response';
-// import { UserService } from '../user/user.service';
 
 let OPTIONS = [];
 const DEFAULT_HEADERS = {
