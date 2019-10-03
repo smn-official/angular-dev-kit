@@ -18,20 +18,9 @@ export class AppComponent implements OnInit {
 
     this.user.setCookie('arandomstring');
 
-    this.user.setMenu([{ id: 1, name: 'Home', url: '/' }]);
+    const options = [{ id: 254, name: 'Pokemon', url: '/pokemon' }];
 
-    this.api.options = [{ id: 1, name: 'Home', url: '/' }];
-
-    this.call();
-  }
-
-  call() {
-    this.api
-      .get(
-        'https://pokeapi.co/api/v2/ability',
-        { offset: 0, limit: 50 },
-        { headers: { AnotherHeader: 'prova!', Option: '1' } }
-      )
-      .subscribe(res => console.log(res));
+    this.user.setMenu(options);
+    this.api.options = options;
   }
 }
