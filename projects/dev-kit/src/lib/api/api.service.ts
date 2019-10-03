@@ -113,7 +113,7 @@ export class ApiService {
    */
   getOption(): number | null {
     const option = this.getFullOption();
-    return option[this.id] || null;
+    return option[this.id].toString() || null;
   }
 
   /**

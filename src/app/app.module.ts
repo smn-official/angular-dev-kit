@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ApiServiceConfig, DevKitModule, UserServiceConfig } from 'projects/dev-kit/src/public-api';
@@ -10,8 +10,8 @@ import { PokemonModule } from './pokemon/pokemon.module';
 
 
 const apiConfig: ApiServiceConfig = {
-  id: 'Cod_Opc',
-  name: 'Nom_Opc',
+  id: 'id',
+  name: 'name',
   headers: {
     authorization: 'Authentication',
     option: 'Option'
@@ -34,6 +34,7 @@ const userConfig: UserServiceConfig = {
     RouterModule,
     PokemonModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
