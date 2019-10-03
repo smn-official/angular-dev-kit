@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { ApiService } from './api.service';
 
-
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
   'Cache-Control': 'no-cache',
@@ -15,11 +14,13 @@ const DEFAULT_HEADERS = {
 @Injectable()
 export class ApiServiceInterceptor implements HttpInterceptor {
 
-  constructor(private api: ApiService, private user: UserService) {}
+  constructor(private api: ApiService, private user: UserService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Pegando token de autenticação.
     const authToken = this.user.getToken();
+
     // Pegando a opção da tela que o usuário está
     const option = this.api.getOption();
 
@@ -28,6 +29,7 @@ export class ApiServiceInterceptor implements HttpInterceptor {
     if (authToken) {
       headers.Authorization = authToken;
     }
+
     if (option) {
       headers.Option = option;
     }

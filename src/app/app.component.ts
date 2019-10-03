@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'projects/dev-kit/src/public-api';
+import { ApiService, UserService } from 'projects/dev-kit/src/public-api';
 import { finalize } from 'rxjs/internal/operators';
 import { query } from '@angular/animations';
 
@@ -10,29 +10,27 @@ import { query } from '@angular/animations';
   providers: []
 })
 export class AppComponent implements OnInit {
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private user: UserService) {
   }
 
   ngOnInit() {
-    this.call()
+    this.user.set({
+      name: 'Devel',
+      email: 'devel@email.com'
+    });
+
+    this.user.setCookie('arandomstring');
+
+    this.user.setMenu([{ id: 1, name: 'Home', url: '/' }]);
+
+    this.api.options = [{ id: 1, name: 'Home', url: '/' }];
+
+    this.call();
   }
 
   call() {
-    // const request = this.api.httpClient.get('https://pokeapi.co/api/v2/').pipe(
-    //   finalize(() => console.log('buscou'))
-    // );
-    // const request = this.api.http('GET', 'https://pokeapi.co/api/v2/').call();
-
-    // request.subscribe(res => {
-    //   console.log('SUCCESS', res);
-    // }, () => {
-    //   // console.log('error')
-    // }, () => {
-    //   // console.log('complete');
-    // })
-
     this.api
-        .get('https://pokeapi.co/api/v2/ability', null, { headers: { AnotherHeader: 'prova!' } })
+        .get('https://pokeapi.co/api/v2/ability', { offset: 0, limit: 50 }, { headers: { AnotherHeader: 'prova!' } })
         .subscribe(res => (console.log(res)))
   }
 }

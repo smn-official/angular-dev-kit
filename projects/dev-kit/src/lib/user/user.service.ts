@@ -27,17 +27,10 @@ export class UserService {
   }
 
   get() {
-    return {
-      user,
-      token
-    };
-  }
-
-  getUser() {
     return user;
   }
 
-  setUser(newUser) {
+  set(newUser) {
     user = newUser;
   }
 

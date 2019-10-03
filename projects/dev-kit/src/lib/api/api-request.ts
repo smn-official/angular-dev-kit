@@ -1,7 +1,6 @@
 /**
  * Interface de parâmetros de uma requisção HTTP
- * @interface
- * */
+ */
 export interface ApiServiceRequest {
     method: 'DELETE' | 'GET' | 'HEAD' | 'JSONP' | 'OPTIONS' | 'POST' | 'PUT';
     url: string;
@@ -10,8 +9,7 @@ export interface ApiServiceRequest {
 
 /**
  * Interface de configurações para uma requisição HTTP
- * @interface
- * */
+ */
 export interface ApiServiceRequestOptions {
     headers?: any;
     reportProgress?: boolean;
