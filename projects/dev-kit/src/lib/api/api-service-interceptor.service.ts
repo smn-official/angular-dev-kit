@@ -28,6 +28,8 @@ export class ApiServiceInterceptor implements HttpInterceptor {
     // Pegando a opção da tela que o usuário está
     const option = this.api.getOption();
 
+    console.log(option)
+
     const headers: any = { ...DEFAULT_HEADERS };
 
     if (authToken && !req.headers.get(this.authorization)) {

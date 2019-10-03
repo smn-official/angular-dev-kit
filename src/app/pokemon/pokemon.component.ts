@@ -7,16 +7,21 @@ import { ApiService } from 'projects/dev-kit/src/public-api';
   styleUrls: ['./pokemon.component.scss']
 })
 export class PokemonComponent implements OnInit {
-  constructor(private api: ApiService) {}
+  list: any[];
+
+  constructor(private api: ApiService) {
+    this.list = [];
+  }
 
   ngOnInit() {
-    console.log('teste');
     this.api
       .get(
-        'https://pokeapi.co/api/v2/ability',
+        'https://pokeapi.co/api/v2/pokemon',
         { offset: 0, limit: 50 },
         { headers: { AnotherHeader: 'prova!' } }
       )
-      .subscribe(res => console.log(res));
+      .subscribe((res: any) => {
+        this.list = res.results;
+      });
   }
 }
