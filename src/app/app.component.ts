@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, UserService } from 'projects/dev-kit/src/public-api';
-import { finalize } from 'rxjs/internal/operators';
-import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +8,7 @@ import { query } from '@angular/animations';
   providers: []
 })
 export class AppComponent implements OnInit {
-  constructor(private api: ApiService, private user: UserService) {
-  }
+  constructor(private api: ApiService, private user: UserService) {}
 
   ngOnInit() {
     this.user.set({
@@ -30,7 +27,11 @@ export class AppComponent implements OnInit {
 
   call() {
     this.api
-        .get('https://pokeapi.co/api/v2/ability', { offset: 0, limit: 50 }, { headers: { AnotherHeader: 'prova!' } })
-        .subscribe(res => (console.log(res)))
+      .get(
+        'https://pokeapi.co/api/v2/ability',
+        { offset: 0, limit: 50 },
+        { headers: { AnotherHeader: 'prova!', Option: '1' } }
+      )
+      .subscribe(res => console.log(res));
   }
 }

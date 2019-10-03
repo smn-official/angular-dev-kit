@@ -1,8 +1,8 @@
 import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 
 import { UserService } from '../user/user.service';
-import { ApiService } from './api.service';
+import { ApiService, ApiServiceConfig } from './api.service';
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
@@ -13,8 +13,12 @@ const DEFAULT_HEADERS = {
 
 @Injectable()
 export class ApiServiceInterceptor implements HttpInterceptor {
+  private authorization: ApiServiceConfig['headers']['authorization'];
+  private option: ApiServiceConfig['headers']['option'];
 
-  constructor(private api: ApiService, private user: UserService) {
+  constructor(private api: ApiService, private user: UserService, @Optional() apiConfig: ApiServiceConfig) {
+    this.authorization = apiConfig.headers.authorization;
+    this.option = apiConfig.headers.option;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -26,12 +30,12 @@ export class ApiServiceInterceptor implements HttpInterceptor {
 
     const headers: any = { ...DEFAULT_HEADERS };
 
-    if (authToken) {
-      headers.Authorization = authToken;
+    if (authToken && !req.headers.get(this.authorization)) {
+      headers[this.authorization] = authToken;
     }
 
-    if (option) {
-      headers.Option = option;
+    if (option && !req.headers.get(this.option)) {
+      headers[this.option] = option;
     }
 
     const request = req.clone({ setHeaders: headers });

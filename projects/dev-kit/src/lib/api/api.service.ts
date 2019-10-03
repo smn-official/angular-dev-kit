@@ -27,16 +27,10 @@ export class ApiService {
   headers: ApiServiceConfigHeader;
 
   constructor(@Optional() config: ApiServiceConfig, private httpClient: HttpClient) {
-    this.id = config && config.id ? config.id : 'id';
-
-    this.name = config && config.name ? config.name : 'name';
-
-    this.url = config && config.url ? config.url : 'url';
-
-    this.headers =
-    config && config.headers
-      ? config.headers
-      : { authorization: 'Authorization', option: 'Option' };
+    this.id = config.id;
+    this.name = config.name;
+    this.url = config.url;
+    this.headers = config.headers;
   }
 
   /**
