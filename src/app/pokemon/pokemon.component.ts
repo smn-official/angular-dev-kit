@@ -40,12 +40,10 @@ export class PokemonComponent implements OnInit {
 
     this.api
       .get(pokemon.url)
-      .subscribe((res: any) => {
-        this.pokemon = res;
-      },
-      null,
-      () => this.loading = false
-    );
+      .subscribe({
+        next: res => this.pokemon = res,
+        complete: () => this.loading = false
+      });
   }
 
   convertHectogramsToKilo(hectograms) {
