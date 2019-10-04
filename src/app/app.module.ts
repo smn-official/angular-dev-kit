@@ -11,7 +11,7 @@ import { PokemonModule } from './pokemon/pokemon.module';
 
 const apiConfig: ApiServiceConfig = {
   id: 'id',
-  name: 'name',
+  url: 'url',
   headers: {
     authorization: 'Authentication',
     option: 'Option'

@@ -37,7 +37,6 @@ export class DevKitModule {
   static forRoot(apiConfig?: ApiServiceConfig, userConfig?: UserServiceConfig): ModuleWithProviders {
     apiConfig = {
       id: 'id',
-      name: 'name',
       url: 'url',
       headers: {
         authorization: 'Authorization',

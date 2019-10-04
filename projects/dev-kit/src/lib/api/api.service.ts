@@ -12,7 +12,6 @@ let OPTIONS = [];
 
 export class ApiServiceConfig {
   id?: string;
-  name?: string;
   url?: string;
   headers?: ApiServiceConfigHeader;
 }
@@ -28,7 +27,6 @@ export class ApiService {
 
   constructor(@Optional() config: ApiServiceConfig, private httpClient: HttpClient) {
     this.id = config.id;
-    this.name = config.name;
     this.url = config.url;
     this.headers = config.headers;
   }
