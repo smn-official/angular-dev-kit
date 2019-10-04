@@ -42,6 +42,10 @@ export class DevKitModule {
         authorization: 'Authorization',
         option: 'Option'
       },
+      use: {
+        method: 'method',
+        url: 'url'
+      },
       ...apiConfig
     };
 

@@ -22,5 +22,43 @@ export class AppComponent implements OnInit {
 
     this.user.setMenu(options);
     this.api.options = options;
+    this.api.methods = {
+      comercial: {
+        loja: {
+           existeCnpj: {
+              url: 'http://192.168.7.37:9001/api/loja-existe/:cnpj',
+              method: 'get'
+           },
+           buscarCnpj: {
+              url: 'http://192.168.7.37:9001/api/loja-cnpj/:cnpj',
+              method: 'get'
+           },
+           alterar: {
+              url: 'http://192.168.7.37:9001/api/loja/:id',
+              method: 'put'
+           },
+           cadastrar: {
+              url: 'http://192.168.7.37:9001/api/loja',
+              method: 'post'
+           },
+           buscar: {
+              url: 'http://192.168.7.37:9001/api/loja/:id',
+              method: 'get'
+           },
+           selecionar: {
+              url: 'http://192.168.7.37:9001/api/loja',
+              method: 'get'
+           }
+        },
+        uf: {
+           dropdown: {
+              url: 'http://192.168.7.37:9001/api/uf-dropdown',
+              method: 'get'
+           }
+        },
+      }
+    };
+
+    this.api.use('comercial', 'loja', 'selecionar').subscribe();
   }
 }

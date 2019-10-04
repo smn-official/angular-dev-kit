@@ -2,17 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
 import { ApiServiceRequest, ApiServiceRequestOptions } from './api-request';
 
+let OPTIONS = [];
+let METHODS = {};
 
 export interface ApiServiceConfigHeader {
   authorization?: string;
   option?: string;
 }
 
-let OPTIONS = [];
+export interface ApiServiceConfigUse {
+  method?: string;
+  url?: string;
+}
 
 export class ApiServiceConfig {
   id?: string;
   url?: string;
+  use: ApiServiceConfigUse;
   headers?: ApiServiceConfigHeader;
 }
 
@@ -21,13 +27,14 @@ export class ApiServiceConfig {
 })
 export class ApiService {
   id: string;
-  name: string;
   url: string;
+  useConfig: ApiServiceConfigUse;
   headers: ApiServiceConfigHeader;
 
   constructor(@Optional() config: ApiServiceConfig, private httpClient: HttpClient) {
     this.id = config.id;
     this.url = config.url;
+    this.useConfig = config.use;
     this.headers = config.headers;
   }
 
@@ -46,6 +53,13 @@ export class ApiService {
     return OPTIONS;
   }
 
+  set methods(methods) {
+    METHODS = methods;
+  }
+
+  get methods() {
+    return METHODS;
+  }
   /**
    * Configura um requisição HTTP do tipo GET
    * @param url - Url da API que será chamada
@@ -104,6 +118,26 @@ export class ApiService {
       params: leftover,
       ...options
     });
+  }
+
+  /**
+   * Configura um requisição HTTP através da api, funcionalidade e método
+   * @param api - Nome da API
+   * @param funcionality - Nome da funcionalidade
+   * @param api - Nome da method
+   * @param data - Parâmetros query string e/ou body da request
+   * @param options - Opções adicionais para requisição
+   */
+  use(api: string, funcionality: string, method: string, data: any = {}, options: ApiServiceRequestOptions = {}) {
+    if (!METHODS[api][funcionality][method]) {
+      console.error('Method not found');
+      return;
+    }
+
+    const request = METHODS[api][funcionality][method];
+    const selfMethod = request[this.useConfig.method].toLowerCase();
+
+    return this[selfMethod](request[this.useConfig.url], data, options);
   }
 
   /**
