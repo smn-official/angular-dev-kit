@@ -22,7 +22,7 @@
       <img *ngIf="pokemon.female" [src]="pokemon.sprites.back_female"/>
     </ui-card-media>
 
-    <div class="gender" *ngIf="pokemon.sprites.front_female">
+    <div class="gender" *ngIf="pokemon.sprites?.front_female">
       <div class="male" (click)="pokemon.female = false" [class.active]="!pokemon.female">Male</div>
       <div class="female" (click)="pokemon.female = true" [class.active]="pokemon.female">Female</div>
     </div>
