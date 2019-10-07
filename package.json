@@ -7,9 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-publish": "ng build dev-kit && npm publish dist/dev-kit"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.5",
     "@angular/common": "~8.2.5",
