@@ -1,6 +1,6 @@
 {
   "name": "@smn-official/angular-dev-kit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "peerDependencies": {
     "@angular/common": "^8.2.7",
     "@angular/core": "^8.2.7"
