@@ -9,15 +9,6 @@ import { AppComponent } from './app.component';
 import { PokemonModule } from './pokemon/pokemon.module';
 
 
-const apiConfig: ApiServiceConfig = {
-  id: 'id',
-  url: 'url',
-  headers: {
-    authorization: 'Authentication',
-    option: 'Option'
-  }
-};
-
 const userConfig: UserServiceConfig = {
   cookiePrefix: environment.prefix
 };
@@ -28,7 +19,7 @@ const userConfig: UserServiceConfig = {
   ],
   imports: [
     BrowserModule,
-    DevKitModule.forRoot(apiConfig, userConfig),
+    DevKitModule.forRoot(null, userConfig),
     HttpClientModule,
     AppRoutingModule,
     RouterModule,

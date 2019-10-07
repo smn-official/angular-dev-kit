@@ -18,7 +18,7 @@ export interface ApiServiceConfigUse {
 export class ApiServiceConfig {
   id?: string;
   url?: string;
-  use: ApiServiceConfigUse;
+  use?: ApiServiceConfigUse;
   headers?: ApiServiceConfigHeader;
 }
 
@@ -145,7 +145,8 @@ export class ApiService {
    */
   getOption(): number | null {
     const option = this.getFullOption();
-    return option[this.id].toString() || null;
+    const optionId = option[this.id];
+    return optionId ? optionId.toString() : null;
   }
 
   /**
