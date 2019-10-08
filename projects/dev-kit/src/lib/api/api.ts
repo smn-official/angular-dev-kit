@@ -21,3 +21,27 @@ export interface ApiServiceRequestOptions {
     configError?: any;
     withCredentials?: boolean;
 }
+
+export interface ApiServiceConfigHeader {
+  authorization?: string;
+  option?: string;
+}
+
+export interface ApiServiceConfigUse {
+  method?: string;
+  url?: string;
+}
+
+export interface ApiServiceConfigError {
+  pure?: boolean;
+  callback?: () => void;
+  snackMessages?: any;
+}
+
+export class ApiServiceConfig {
+  id?: string;
+  url?: string;
+  use?: ApiServiceConfigUse;
+  headers?: ApiServiceConfigHeader;
+  configError?: any;
+}

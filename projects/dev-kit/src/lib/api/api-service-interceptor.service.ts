@@ -1,11 +1,11 @@
-import { HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-
-import { UserService } from '../user/user.service';
-import { ApiService, ApiServiceConfig } from './api.service';
-import { throwError } from 'rxjs';
 import { UiSnackbar } from 'ng-smn-ui';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { UserService } from '../user/user.service';
+import { ApiServiceConfig } from './api';
+import { ApiService } from './api.service';
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',

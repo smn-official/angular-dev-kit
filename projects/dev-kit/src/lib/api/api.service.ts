@@ -1,27 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
-import { ApiServiceRequest, ApiServiceRequestOptions } from './api-request';
+import {
+  ApiServiceConfig,
+  ApiServiceConfigHeader,
+  ApiServiceConfigUse,
+  ApiServiceRequest,
+  ApiServiceRequestOptions
+} from './api';
 
 let OPTIONS = [];
 let METHODS = {};
-
-export interface ApiServiceConfigHeader {
-  authorization?: string;
-  option?: string;
-}
-
-export interface ApiServiceConfigUse {
-  method?: string;
-  url?: string;
-}
-
-export class ApiServiceConfig {
-  id?: string;
-  url?: string;
-  use?: ApiServiceConfigUse;
-  headers?: ApiServiceConfigHeader;
-  configError?: any;
-}
 
 @Injectable({
   providedIn: 'root',

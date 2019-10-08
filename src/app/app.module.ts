@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { SMNUIModule } from 'ng-smn-ui';
 
-
 const apiConfig: ApiServiceConfig = {
   configError: {
     snackMessages: {
@@ -17,7 +16,7 @@ const apiConfig: ApiServiceConfig = {
       404: 'Not found message'
     },
     callback: (error) => {
-      console.log(error)
+      console.log('Custom error', error);
     }
   }
 };

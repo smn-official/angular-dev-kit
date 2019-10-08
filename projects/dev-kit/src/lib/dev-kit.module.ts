@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ApiServiceConfig } from './api/api';
 import { ApiServiceInterceptor } from './api/api-service-interceptor.service';
-import { ApiServiceConfig, ApiService } from './api/api.service';
-import { UserServiceConfig, UserService } from './user/user.service';
+import { ApiService } from './api/api.service';
+import { UserService, UserServiceConfig } from './user/user.service';
 
 // API
-export * from './api/api-request';
-export * from './api/api-response';
+export * from './api/api';
 export * from './api/api.service';
 export * from './user/user.service';
 
