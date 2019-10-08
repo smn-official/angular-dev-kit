@@ -1,8 +1,11 @@
-import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
+import { catchError } from 'rxjs/operators';
 
 import { UserService } from '../user/user.service';
 import { ApiService, ApiServiceConfig } from './api.service';
+import { throwError } from 'rxjs';
+import { UiSnackbar } from 'ng-smn-ui';
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
@@ -15,10 +18,12 @@ const DEFAULT_HEADERS = {
 export class ApiServiceInterceptor implements HttpInterceptor {
   private authorization: ApiServiceConfig['headers']['authorization'];
   private option: ApiServiceConfig['headers']['option'];
+  private customConfigError: ApiServiceConfig['configError'];
 
   constructor(private api: ApiService, private user: UserService, @Optional() apiConfig: ApiServiceConfig) {
     this.authorization = apiConfig.headers.authorization;
     this.option = apiConfig.headers.option;
+    this.customConfigError = apiConfig.configError;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -38,8 +43,47 @@ export class ApiServiceInterceptor implements HttpInterceptor {
       headers[this.option] = option;
     }
 
-    const request = req.clone({ setHeaders: headers });
+    // Pegando as configurações de erros
+    const configError: any = req.params.get('configError');
+    // Deletando o parâmetro config para que não seja colocado em nenhuma query string ou body
+    const params = req.params.delete('configError');
 
-    return next.handle(request);
+    const request = req.clone({ setHeaders: headers, params });
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (configError.pure) {
+          return;
+        }
+
+        let snackMessages = {
+          0: 'Um de nossos serviços está fora do ar e não foi possível processar sua requisição. Tente novamente mais tarde.',
+          400: 'Requisição inválida. Verifique as informações fornecidas.',
+          500: 'Ocorreu um erro interno. Já fomos informados do erro. Tente novamente mais tarde.',
+          ...this.customConfigError.snackMessages
+        };
+
+        if (configError) {
+          snackMessages = { ...snackMessages, ...configError.snackMessages };
+        }
+
+        if (this.customConfigError && this.customConfigError.callback) {
+          this.customConfigError.callback(error);
+        }
+
+        for (const code in snackMessages) {
+          if (error.status === +code) {
+            UiSnackbar.show({
+              text: snackMessages[code],
+              duration: 10000,
+              actionText: 'Ok',
+              action: close => close()
+            });
+          }
+        }
+
+        return throwError(error);
+      })
+    );
   }
 }

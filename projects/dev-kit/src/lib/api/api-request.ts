@@ -18,5 +18,6 @@ export interface ApiServiceRequestOptions {
     responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
     cleanResult?: boolean;
     cleanError?: boolean;
+    configError?: any;
     withCredentials?: boolean;
 }

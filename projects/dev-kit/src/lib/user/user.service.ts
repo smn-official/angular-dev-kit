@@ -7,7 +7,7 @@ let token: string;
 let custom: any = {};
 
 export class UserServiceConfig {
-  cookiePrefix: string;
+  cookiePrefix?: string;
 }
 
 @Injectable()

@@ -21,9 +21,9 @@ export class PokemonComponent implements OnInit {
   ngOnInit() {
     this.api
       .get(
-        'https://pokeapi.co/api/v2/pokemon',
+        'https://pokeapi.co/api/v2/pokemon123',
         { offset: 0, limit: 964 },
-        { headers: { AnotherHeader: 'prova!' } }
+        { headers: { AnotherHeader: 'prova!' }, cleanError: true }
       )
       .subscribe((res: any) => {
         this.list = res.results;

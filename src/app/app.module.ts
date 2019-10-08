@@ -7,7 +7,20 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PokemonModule } from './pokemon/pokemon.module';
+import { SMNUIModule } from 'ng-smn-ui';
 
+
+const apiConfig: ApiServiceConfig = {
+  configError: {
+    snackMessages: {
+      409: 'Static message',
+      404: 'Not found message'
+    },
+    callback: (error) => {
+      console.log(error)
+    }
+  }
+};
 
 const userConfig: UserServiceConfig = {
   cookiePrefix: environment.prefix
@@ -19,11 +32,12 @@ const userConfig: UserServiceConfig = {
   ],
   imports: [
     BrowserModule,
-    DevKitModule.forRoot(null, userConfig),
+    DevKitModule.forRoot(apiConfig, userConfig),
     HttpClientModule,
     AppRoutingModule,
     RouterModule,
-    PokemonModule
+    PokemonModule,
+    SMNUIModule,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

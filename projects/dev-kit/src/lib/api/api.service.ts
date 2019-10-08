@@ -20,6 +20,7 @@ export class ApiServiceConfig {
   url?: string;
   use?: ApiServiceConfigUse;
   headers?: ApiServiceConfigHeader;
+  configError?: any;
 }
 
 @Injectable({
@@ -69,8 +70,13 @@ export class ApiService {
   get(url: ApiServiceRequest['url'], data: any = {}, options: ApiServiceRequestOptions = {}) {
     const { leftover, ...paramsFormatted } = this.formatParams(url, data);
 
+    const params = {
+      ...leftover,
+      configError: options.configError || null
+    };
+
     return this.httpClient.get(paramsFormatted.url, {
-      params: leftover,
+      params,
       ...options
     });
   }
