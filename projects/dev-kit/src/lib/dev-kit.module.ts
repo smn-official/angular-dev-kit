@@ -35,10 +35,6 @@ export class DevKitModule {
   }
 
   static forRoot(apiConfig: ApiServiceConfig = {}, userConfig: UserServiceConfig = {}): ModuleWithProviders {
-    const configError = {
-
-      ...apiConfig.configError
-    };
     apiConfig = {
       id: 'id',
       url: 'url',
