@@ -52,7 +52,7 @@ export class ApiServiceInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (configError.pure) {
+        if (configError && configError.pure) {
           return;
         }
 
