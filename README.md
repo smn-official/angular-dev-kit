@@ -6,7 +6,7 @@ Alguns serviços e funções para os projetos feitos pela SMN.
 
 Primeiro, você precisa instalar o a biblioteca no seu projeto:    
 ```bash
- npm i --save-dev @smn-official/angular-dev-kit
+ npm i --save @smn-official/angular-dev-kit
 ```
 Depois vamos importar o módulo no projeto:
 ```ts

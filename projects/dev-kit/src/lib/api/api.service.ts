@@ -78,10 +78,7 @@ export class ApiService {
   post(url: ApiServiceRequest['url'], data: any = {}, options: ApiServiceRequestOptions = {}) {
     const { leftover, ...paramsFormatted } = this.formatParams(url, data);
 
-    return this.httpClient.post(paramsFormatted.url, {
-      body: leftover,
-      ...options
-    });
+    return this.httpClient.post(paramsFormatted.url, leftover, options);
   }
 
   /**
@@ -93,10 +90,7 @@ export class ApiService {
   put(url: ApiServiceRequest['url'], data: any = {}, options: ApiServiceRequestOptions = {}) {
     const { leftover, ...paramsFormatted } = this.formatParams(url, data);
 
-    return this.httpClient.put(paramsFormatted.url, {
-      body: leftover,
-      ...options
-    });
+    return this.httpClient.put(paramsFormatted.url, leftover, options);
   }
 
   /**

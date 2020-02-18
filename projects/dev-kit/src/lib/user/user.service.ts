@@ -55,12 +55,16 @@ export class UserService {
     return !!UiCookie.get(this.authorization);
   }
 
-  getCustom() {
-    return custom;
+  getCustom(key) {
+    return custom[key];
   }
 
-  setCustom(value) {
-    custom = value;
+  setCustom(key, value) {
+    custom[key] = value;
+  }
+
+  removeCustom(key) {
+    delete custom[key];
   }
 
   getCookie() {
