@@ -11,6 +11,19 @@ export * from './api/api';
 export * from './api/api.service';
 export * from './user/user.service';
 
+const defaultApiConfig = {
+  id: 'id',
+  url: 'url',
+  headers: {
+    authorization: 'Authorization',
+    option: 'Option'
+  },
+  use: {
+    method: 'method',
+    url: 'url'
+  },
+};
+
 @NgModule({
   imports: [CommonModule],
   declarations: [],
@@ -35,20 +48,6 @@ export class DevKitModule {
   }
 
   static forRoot(apiConfig: ApiServiceConfig = {}, userConfig: UserServiceConfig = {}): ModuleWithProviders {
-    apiConfig = {
-      id: 'id',
-      url: 'url',
-      headers: {
-        authorization: 'Authorization',
-        option: 'Option'
-      },
-      use: {
-        method: 'method',
-        url: 'url'
-      },
-      ...apiConfig
-    };
-
     return {
       ngModule: DevKitModule,
       providers: [
@@ -56,7 +55,7 @@ export class DevKitModule {
         UserService,
         {
           provide: ApiServiceConfig,
-          useValue: apiConfig
+          useValue: { ...defaultApiConfig, ...apiConfig }
         },
         {
           provide: UserServiceConfig,

@@ -9,19 +9,16 @@ import { AppComponent } from './app.component';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { SMNUIModule } from 'ng-smn-ui';
 
-const apiConfig: ApiServiceConfig = {
+export const apiConfig: ApiServiceConfig = {
   configError: {
     snackMessages: {
-      409: 'Static message',
-      404: 'Not found message'
+      '409': 'Static message',
+      '404': 'Not found message'
     },
-    callback: (error) => {
-      console.log('Custom error', error);
-    }
   }
 };
 
-const userConfig: UserServiceConfig = {
+export const userConfig: UserServiceConfig = {
   cookiePrefix: environment.prefix
 };
 
