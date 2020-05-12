@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Optional, Inject } from '@angular/core';
 import {
   ApiServiceConfig,
   ApiServiceConfigHeader,
@@ -20,7 +20,7 @@ export class ApiService {
   useConfig: ApiServiceConfigUse;
   headers: ApiServiceConfigHeader;
 
-  constructor(@Optional() config: ApiServiceConfig, private httpClient: HttpClient) {
+  constructor(config: ApiServiceConfig, private httpClient: HttpClient) {
     this.id = config.id;
     this.url = config.url;
     this.useConfig = config.use;

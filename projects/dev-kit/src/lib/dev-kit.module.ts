@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf, InjectionToken } from '@angular/core';
 import { ApiServiceConfig } from './api/api';
 import { ApiServiceInterceptor } from './api/api-service-interceptor.service';
 import { ApiService } from './api/api.service';
@@ -24,6 +24,13 @@ const defaultApiConfig = {
   },
 };
 
+export function apiConfigFactory(config) {
+  return config;
+}
+
+export const API_CONFIG: InjectionToken<ApiServiceConfig> = new InjectionToken<ApiServiceConfig>('apiServiceConfig');
+export const USER_CONFIG: InjectionToken<UserServiceConfig> = new InjectionToken<UserServiceConfig>('userServiceConfig');
+
 @NgModule({
   imports: [CommonModule],
   declarations: [],
@@ -31,11 +38,6 @@ const defaultApiConfig = {
   providers: [
     ApiService,
     UserService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ApiServiceInterceptor,
-      multi: true
-    }
   ]
 })
 export class DevKitModule {
@@ -51,17 +53,49 @@ export class DevKitModule {
     return {
       ngModule: DevKitModule,
       providers: [
-        ApiService,
         UserService,
         {
-          provide: ApiServiceConfig,
-          useValue: { ...defaultApiConfig, ...apiConfig }
+          provide: API_CONFIG,
+          useValue: apiConfig,
+        },
+        {
+          provide: ApiService,
+          useFactory: provideApiService,
+          deps: [API_CONFIG, HttpClient]
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useFactory: provideApiServiceInterceptor,
+          deps: [API_CONFIG, ApiService, UserService],
+          multi: true
+        },
+        {
+          provide: USER_CONFIG,
+          useValue: userConfig,
         },
         {
           provide: UserServiceConfig,
-          useValue: userConfig
+          useValue: userConfig,
+          deps: [USER_CONFIG]
         }
       ]
     };
   }
+}
+
+export function provideApiService(newConfig?: ApiServiceConfig, httpClient?: HttpClient): any {
+  const config = { ...defaultApiConfig, ...newConfig };
+  const service = new ApiService(config, httpClient);
+  return service;
+}
+
+export function provideApiServiceInterceptor(newConfig?: ApiServiceConfig, apiService?: ApiService, userService?: UserService): any {
+  const config = { ...defaultApiConfig, ...newConfig };
+  const service = new ApiServiceInterceptor(apiService, userService, config);
+  return service;
+}
+
+export function provideUserService(config?: UserServiceConfig): any {
+  const service = new UserService(config);
+  return service;
 }

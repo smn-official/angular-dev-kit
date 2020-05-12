@@ -20,7 +20,7 @@ export class ApiServiceInterceptor implements HttpInterceptor {
   private option: ApiServiceConfig['headers']['option'];
   private customConfigError: ApiServiceConfig['configError'];
 
-  constructor(private api: ApiService, private user: UserService, @Optional() apiConfig: ApiServiceConfig) {
+  constructor(private api: ApiService, private user: UserService, apiConfig: ApiServiceConfig) {
     this.authorization = apiConfig.headers.authorization;
     this.option = apiConfig.headers.option;
     this.customConfigError = apiConfig.configError;
