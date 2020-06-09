@@ -49,7 +49,7 @@ export class DevKitModule {
     }
   }
 
-  static forRoot(apiConfig: ApiServiceConfig = {}, userConfig: UserServiceConfig = {}): ModuleWithProviders {
+  static forRoot(apiConfig: ApiServiceConfig = {}, userConfig: UserServiceConfig = {}): ModuleWithProviders<DevKitModule> {
     return {
       ngModule: DevKitModule,
       providers: [

@@ -7,7 +7,7 @@ import { ApiService } from 'projects/dev-kit/src/public-api';
   styleUrls: ['./pokemon.component.scss']
 })
 export class PokemonComponent implements OnInit {
-  @ViewChild('pokemonDialog', { static: false }) pokemonDialog: any;
+  @ViewChild('pokemonDialog') pokemonDialog: any;
 
   list: any[];
   loading: boolean;
