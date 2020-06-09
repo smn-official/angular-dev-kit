@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-publish": "ng build dev-kit && npm publish dist/dev-kit"
+    "build-publish": "ng build dev-kit --prod && npm publish dist/dev-kit"
   },
   "dependencies": {
     "@angular/animations": "~9.1.9",
