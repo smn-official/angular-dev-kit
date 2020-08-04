@@ -23,7 +23,7 @@ export class ApiServiceInterceptor implements HttpInterceptor {
   constructor(private api: ApiService, private user: UserService, apiConfig: ApiServiceConfig) {
     this.authorization = apiConfig.headers.authorization;
     this.option = apiConfig.headers.option;
-    this.customConfigError = apiConfig.configError;
+    this.customConfigError = apiConfig.configError || {};
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
